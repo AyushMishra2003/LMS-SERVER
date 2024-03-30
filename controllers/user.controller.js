@@ -6,7 +6,7 @@ import sendEmail from "../utils/sendEmail.js"
 import nodemailer from 'nodemailer'
 import cloudinary from 'cloudinary'
 import crypto from 'crypto'
-import { error } from "console"
+import { error, log } from "console"
 import fs from 'fs/promises'
 const cokkieOption={
     maxAge:7*24*60*60*1000,
@@ -15,39 +15,41 @@ const cokkieOption={
 }
 
 const register=async(req,res,next)=>{
-    const {fullName,email,password,number,role}=req.body
-    if(!fullName || !email  || !password || !number){
+    console.log("mai aa gaya");
+    const {fullName,email,password,role}=req.body
+    if(!fullName || !email  || !password){
         return next(new AppError('All fields are required',400))
     }
-    
+    console.log("ayu1");
     const userExists=await User.findOne({email})
     
     if(userExists){
        return next(new AppError('Email already exits',400))
     }
-
+    console.log("ayu2");
     if(fullName.length<5 || password.length<5){
         return next(new AppError('Number or Password should be atleast 5 character'))
     }
-    
+    console.log("ayu3");
     const validEmail=emailValidator.validate(email)
     if(!validEmail){
         return next(new AppError('Email is not valid',400))
     }
-    if(number.toString().length<10){
-        return next(new AppError('Invalid Number'))
-    }
+    console.log("ayu5");
+    // if(number.toString().length<10){
+    //     return next(new AppError('Invalid Number'))
+    // }
+    console.log("ayu6");
     const user=await User.create({
        fullName,
        email,
        password,  
-       number,
        avatar:{
         public_id:'',
         secure_url:''
        }
     })
-    
+    console.log("ayu7");
     if(!user){
         return next(new AppError('User registraction failed',400))
     }
@@ -101,31 +103,35 @@ const register=async(req,res,next)=>{
 
 const login=async(req,res,next)=>{
   try{
+   console.log("mai hu don"); 
    const {email,password}=req.body
-
+   console.log("ayush1");
+   console.log(email,password);
    if(!email || !password){
     return next(new AppError('All fields are required',400))
    }
-
+   console.log("ayush2");
    const user=await User.findOne({
         email
    }).select('+password')
 
 
-
+   console.log("ayush3");
    if(!user || !user.comparePassword(password)){
     return next(new AppError('Email or Password not matched',400))
    }
-
+   console.log("ayush4");
    const token=await user.generateJWTToken()
 
    user.password=undefined
+   console.log("ayush5");
    res.cookie('token',token,cokkieOption)
    res.status(200).json({
     success:true,
     "message":"Login Succesfully",
     user,
    })
+   console.log("ayush6");
 }catch(e){
     return next(new AppError("Bad request is not found",500))
 }
