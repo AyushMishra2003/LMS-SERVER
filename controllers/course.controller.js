@@ -13,6 +13,7 @@ const getAllCourses=async(req,res,next)=>{
             "message":"Course Not Found"
         })
     }
+    console.log(courses);
     return res.status(200).json({
         success:true,
         "message":"Your course be like:-",
