@@ -2,6 +2,7 @@ import AppError from "../utils/error.util.js"
 import jwt from 'jsonwebtoken'
 
 const isLoogedIn=async(req,res,next)=>{
+     console.log("login ho ya nahi");
      const {token}=req.cookies
 
      if(!token){
@@ -12,9 +13,8 @@ const isLoogedIn=async(req,res,next)=>{
 
      req.user=userDetails
 
-
+     console.log("next hoga next");
      next()
-
 }
 
 const authorizedRoles=(...roles)=>async(req,res,next)=>{

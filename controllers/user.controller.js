@@ -115,9 +115,12 @@ const login=async(req,res,next)=>{
         email
    }).select('+password')
 
+   
+   console.log(user);
 
    console.log("ayush3");
-   if(!user || !user.comparePassword(password)){
+   const isPassword=await user.comparePassword(password);
+   if(!user || !isPassword){
     return next(new AppError('Email or Password not matched',400))
    }
    console.log("ayush4");
@@ -155,16 +158,18 @@ const logout=(req,res)=>{
 
 const getProfile=async(req,res,next)=>{
 
+   console.log("profile-1"); 
    const userId=req.user.id
+   console.log("profile-2");
    const user=await User.findById(userId)
+   console.log("profile-3");
    res.status(200).json({
     success:true,
     message:"User detial",
     user
    })
+   console.log("profile-4");
 }
-
-
 
 const  forgot_password = async (req, res, next) => {
         const { email } = req.body
