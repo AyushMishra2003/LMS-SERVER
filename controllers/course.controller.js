@@ -1,7 +1,7 @@
 import Course from "../models/course.model.js";
 import AppError from "../utils/error.util.js";
 import User from "../models/user.model.js";
-import clodinary from 'cloudinary'
+import cloudinary from 'cloudinary'
 import fs from 'fs/promises'
 import { log } from "console";
 import { lchown } from "fs";
@@ -77,7 +77,7 @@ const createCourse=async(req,res,next)=>{
         )
     }
     if(req.file){
-        const result=await clodinary.v2.uploader.upload(req.file.path,{
+        const result=await cloudinary.v2.uploader.upload(req.file.path,{
             folder:'lms'
         })
         if(result){
@@ -173,7 +173,7 @@ const addLectureToCourseById=async(req,res,next)=>{
 //  }
 //   if(req.file){
 //     console.log("c-1");
-//     const result=await clodinary.v2.uploader.upload(req.file.path,{
+//     const result=await cloudinary.v2.uploader.upload(req.file.path,{
 //         folder:'lms',
 //         resource_type: 'video'
 //     })
@@ -240,19 +240,21 @@ try {
 
     console.log("lecture adding");
     if (req.file) {
-        const result = await clodinary.v2.uploader.upload(req.file.path, {
+        console.log("le le baba");
+        const result = await cloudinary.v2.uploader.upload(req.file.path, {
             folder: 'lms',
             resource_type: 'video'
         })
+        console.log("11");
 
         if (result) {
             lectureData.lecture.public_id = result.public_id
-            lectureData.lecture.secure_url = result.secure_url
+            lectureData.lecture.secure_url =result.secure_url
         }        
         fs.rm(`uploads/${req.file.filename}`)
     }
 
-
+    console.log("1");
     course.lectures.push(lectureData)
     course.numberOfLecture = course.lectures.length
 
@@ -297,7 +299,7 @@ const deleteLecture = async (req, res, next) => {
         }
 
         // Delete the lecture video from Cloudinary
-        await clodinary.v2.uploader.destroy(
+        await cloudinary.v2.uploader.destroy(
             course.lectures[lectureIndex].lecture.public_id,
             {
                 resource_type: 'video',
