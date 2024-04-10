@@ -39,10 +39,13 @@ courseRouter.route('/:id')
 // courseRouter.route('/:id&lectureId')
 //       .delete(
 //             isLoogedIn,
-//             authorizedRoles('ADMIN'),
+//             authorizedRoles('ADMIN')
 //             deleteLecture
 //       )
 courseRouter.delete('/remove/lecture/:id/:lectureId', isLoogedIn,deleteLecture);
+
+
+courseRouter.post('/demo/video')
 // courseRouter.get('/login',getlogi
 
 

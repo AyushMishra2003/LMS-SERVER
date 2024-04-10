@@ -30,7 +30,7 @@ const couseSchema=new Schema({
             // required:true
         }
     },
-    lectures:[
+    lectures:[ 
         {
             title:String,
             description:String,

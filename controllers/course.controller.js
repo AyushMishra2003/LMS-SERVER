@@ -272,6 +272,11 @@ try {
 }
 }
 
+
+const addDemoVideo=async(req,res,next)=>{
+    const {title,description,demoVideo}=req.body
+}
+
 const deleteLecture = async (req, res, next) => {
     try {
         // Extract course and lecture IDs from the request parameters
@@ -335,5 +340,6 @@ export {
     updateCourse,
     removeCourse,
     addLectureToCourseById,
-    deleteLecture
+    deleteLecture,
+    addDemoVideo
 }
