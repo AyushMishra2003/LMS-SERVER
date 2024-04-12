@@ -53,6 +53,7 @@ const createCourse=async(req,res,next)=>{
 
     try{
     const {title,description,category,createdBy}=req.body
+    console.log(title,description,category,createdBy);
 
     if(!title || !description || !category || !createdBy ){
         next(new AppError("Every Field are Required",400))
@@ -69,7 +70,7 @@ const createCourse=async(req,res,next)=>{
         }
     })
      
-    // console.log(course);
+    console.log(course);
     console.log("c-124");
     if(!course){
         return next(
@@ -96,7 +97,8 @@ const createCourse=async(req,res,next)=>{
        course,
     })
 }catch(e){
-    return(next(new AppError("Something Went Wrong",500)))
+    console.log(e.message);
+    return(next(new AppError(e.message,500)))
 }
 }
 
@@ -129,16 +131,13 @@ const updateCourse=async(req,res,next)=>{
 
 const removeCourse=async(req,res,next)=>{
   try{
-    console.log("remover courses aa gaya");
     const {id}=req.params
     const course=await Course.findById(id)
 
     if(!course){
         return next(new AppError("Course not found",400))
     }
-    console.log(course);
     await Course.findByIdAndDelete(id)
-    console.log("ayu4");
     res.status(200).json({
         success:true,
         "message":"Course delete Sucessfully"
