@@ -1,4 +1,4 @@
-import Demos from "../models/Demo.model.js";
+import Demos from "../models/demo.model.js"
 import AppError from "../utils/error.util.js";
 import cloudinary from 'cloudinary'
 const addDemoVideo=async()=>{

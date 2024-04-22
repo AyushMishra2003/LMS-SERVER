@@ -6,7 +6,6 @@ import sendEmail from "../utils/sendEmail.js"
 import nodemailer from 'nodemailer'
 import cloudinary from 'cloudinary'
 import crypto from 'crypto'
-import { error, log } from "console"
 import fs from 'fs/promises'
 const cokkieOption={
     maxAge:7*24*60*60*1000,
@@ -103,14 +102,12 @@ const register=async(req,res,next)=>{
 
 const login=async(req,res,next)=>{
   try{
-   console.log("mai hu don"); 
    const {email,password}=req.body
-   console.log("ayush1");
-   console.log(email,password);
+
    if(!email || !password){
     return next(new AppError('All fields are required',400))
    }
-   console.log("ayush2");
+   
    const user=await User.findOne({
         email
    }).select('+password')
