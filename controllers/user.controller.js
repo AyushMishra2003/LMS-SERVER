@@ -7,12 +7,12 @@ import nodemailer from 'nodemailer'
 import cloudinary from 'cloudinary'
 import crypto from 'crypto'
 import fs from 'fs/promises'
-const cokkieOption={
-    maxAge:7*24*60*60*1000,
-    httpOnly:true,
-    secure:false,
-    sameSite: 'none',
-}
+res.cookie('token', token, {
+    httpOnly: true,
+    secure: false, // Set to true if using HTTPS
+    sameSite: 'none', // Change if needed based on your CORS configuration
+    maxAge: 7 * 24 * 60 * 60 * 1000, // Example for a 7-day expiry
+  });
 
 const register=async(req,res,next)=>{
     const {fullName,email,password,role}=req.body

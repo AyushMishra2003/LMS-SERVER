@@ -19,17 +19,17 @@ import jwt from 'jsonwebtoken'
 
 const isLoogedIn = async (req, res, next) => {
    try {
-       const { token } = req.cookies; // Assuming you're using cookie-parser middleware
+       const { token } = await req.cookies; // Assuming you're using cookie-parser middleware
 
        console.log(token);
 
-       if (!token) {
-           throw new Error("Not logged in");
-       }
+      //  if (!token) {
+      //      throw new Error("Not logged in");
+      //  }
 
-       const userDetails = await jwt.verify(token, process.env.SECRET);
+      //  const userDetails = await jwt.verify(token, process.env.SECRET);
 
-       req.user = userDetails;
+      //  req.user = userDetails;
 
        next();
    } catch (error) {
