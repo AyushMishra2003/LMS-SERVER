@@ -14,31 +14,22 @@ const cokkieOption={
 }
 
 const register=async(req,res,next)=>{
-    console.log("mai aa gaya");
     const {fullName,email,password,role}=req.body
     if(!fullName || !email  || !password){
         return next(new AppError('All fields are required',400))
     }
-    console.log("ayu1");
     const userExists=await User.findOne({email})
     
     if(userExists){
        return next(new AppError('Email already exits',400))
     }
-    console.log("ayu2");
     if(fullName.length<5 || password.length<5){
         return next(new AppError('Number or Password should be atleast 5 character'))
     }
-    console.log("ayu3");
     const validEmail=emailValidator.validate(email)
     if(!validEmail){
         return next(new AppError('Email is not valid',400))
     }
-    console.log("ayu5");
-    // if(number.toString().length<10){
-    //     return next(new AppError('Invalid Number'))
-    // }
-    console.log("ayu6");
     const user=await User.create({
        fullName,
        email,
@@ -48,7 +39,6 @@ const register=async(req,res,next)=>{
         secure_url:''
        }
     })
-    console.log("ayu7");
     if(!user){
         return next(new AppError('User registraction failed',400))
     }
@@ -63,17 +53,12 @@ const register=async(req,res,next)=>{
             gravity:'faces',
             crop:'fill'
          })
-         console.log(result);
          if(result){
-            console.log("result kaise-1 ");
             user.avater.public_id=result.public_id;
-            console.log("kk-2");
             // user.avatar.secure_url=result.secure_url;
             user.avater.secure_url=result.secure_url
-            console.log("kaise-1");
             // Remove file
             fs.rm(`uploads/${req.file.filename}`)
-            console.log("kaise-2");
          }
         }catch(e){  
            return next(
@@ -103,7 +88,7 @@ const register=async(req,res,next)=>{
 const login=async(req,res,next)=>{
   try{
    const {email,password}=req.body
-
+   console.log(req.body);
    if(!email || !password){
     return next(new AppError('All fields are required',400))
    }
