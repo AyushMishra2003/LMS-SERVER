@@ -7,12 +7,14 @@ import nodemailer from 'nodemailer'
 import cloudinary from 'cloudinary'
 import crypto from 'crypto'
 import fs from 'fs/promises'
-res.cookie('token', token, {
-    httpOnly: true,
-    secure: false, // Set to true if using HTTPS
-    sameSite: 'none', // Change if needed based on your CORS configuration
-    maxAge: 7 * 24 * 60 * 60 * 1000, // Example for a 7-day expiry
-  });
+const cokkieOption={
+    maxAge:7*24*60*60*1000,
+    httpOnly:true,
+    secure:false,
+    sameSite: 'none',
+}
+
+
 
 const register=async(req,res,next)=>{
     const {fullName,email,password,role}=req.body
@@ -107,7 +109,14 @@ const login=async(req,res,next)=>{
    console.log(token);
 
    user.password=undefined
-   res.cookie('token',token,cokkieOption)
+//    res.cookie('token',token,cokkieOption)
+   res.cookie('token', token, {
+    httpOnly: true,
+    secure: false, // Set to true if using HTTPS
+    sameSite: 'none', // Change if needed based on your CORS configuration
+    maxAge: 7 * 24 * 60 * 60 * 1000, // Example for a 7-day expiry
+  });
+
 
    res.status(200).json({
     success:true,
