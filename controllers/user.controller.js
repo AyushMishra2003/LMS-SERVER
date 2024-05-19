@@ -10,7 +10,7 @@ import fs from 'fs/promises'
 const cokkieOption={
     maxAge:7*24*60*60*1000,
     httpOnly:true,
-    secure:true
+    secure:false
 }
 
 const register=async(req,res,next)=>{
@@ -88,7 +88,6 @@ const register=async(req,res,next)=>{
 const login=async(req,res,next)=>{
   try{
    const {email,password}=req.body
-   console.log(req.body);
    if(!email || !password){
     return next(new AppError('All fields are required',400))
    }
@@ -98,25 +97,21 @@ const login=async(req,res,next)=>{
    }).select('+password')
 
    
-   console.log(user);
-
-   console.log("ayush3");
    const isPassword=await user.comparePassword(password);
    if(!user || !isPassword){
     return next(new AppError('Email or Password not matched',400))
    }
-   console.log("ayush4");
    const token=await user.generateJWTToken()
 
+   console.log(token);
+
    user.password=undefined
-   console.log("ayush5");
    res.cookie('token',token,cokkieOption)
    res.status(200).json({
     success:true,
     "message":"Login Succesfully",
     user,
    })
-   console.log("ayush6");
 }catch(e){
     return next(new AppError("Bad request is not found",500))
 }
