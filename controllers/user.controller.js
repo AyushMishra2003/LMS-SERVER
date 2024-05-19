@@ -10,7 +10,8 @@ import fs from 'fs/promises'
 const cokkieOption={
     maxAge:7*24*60*60*1000,
     httpOnly:true,
-    secure:false
+    secure:false,
+    sameSite: 'none',
 }
 
 const register=async(req,res,next)=>{
