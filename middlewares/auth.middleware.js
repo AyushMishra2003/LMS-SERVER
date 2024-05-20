@@ -23,13 +23,13 @@ const isLoogedIn = async (req, res, next) => {
 
        console.log(token);
 
-      //  if (!token) {
-      //      throw new Error("Not logged in");
-      //  }
+       if (!token) {
+           throw new Error("Not logged in");
+       }
 
-      //  const userDetails = await jwt.verify(token, process.env.SECRET);
+       const userDetails = await jwt.verify(token, process.env.SECRET);
 
-      //  req.user = userDetails;
+       req.user = userDetails;
 
        next();
    } catch (error) {
