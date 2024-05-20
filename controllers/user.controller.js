@@ -104,7 +104,7 @@ const login=async(req,res,next)=>{
    }
    const token=await user.generateJWTToken()
   
-   console.log(res.cokkie);
+   console.log(res.cookie);
 
 
    console.log(token);
@@ -112,7 +112,7 @@ const login=async(req,res,next)=>{
    user.password=undefined
    res.cookie('token',token,cokkieOption)
 
-   console.log(res.cokkie);
+   console.log(res.cookie);
 //    res.cookie('token', token, {
 //     httpOnly: true,
 //     secure: false, // Set to true if using HTTPS
