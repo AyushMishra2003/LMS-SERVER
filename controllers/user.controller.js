@@ -148,8 +148,13 @@ const getProfile=async(req,res,next)=>{
 
    console.log("profile-1"); 
    const userId=req.user.id
+
+   console.log(req.user.id);
    console.log("profile-2");
    const user=await User.findById(userId)
+   if(!user){
+      return next(new AppError("User not Found",400))
+   }
    console.log("profile-3");
    res.status(200).json({
     success:true,
