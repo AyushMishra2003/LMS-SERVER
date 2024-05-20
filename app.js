@@ -14,22 +14,15 @@ config()
 
 
 const app=express()
-
+app.use(express.json())
+app.use(cookieParser())
+app.use(express.urlencoded({extended:true}))
 // app.set("trust proxy", 1);
 
 app.use(cors({
    origin:[process.env.FRONTEND_URL],
    credentials:true
 }))
-
-
-
-app.use(express.json())
-
-
-app.use(cookieParser())
-
-app.use(express.urlencoded({extended:true}))
 
 app.use(morgan('dev'))
 app.use('/api/v1/user',userRoutes)
