@@ -18,8 +18,9 @@ import jwt from 'jsonwebtoken'
 // }
 
 const isLoogedIn = async (req, res, next) => {
-   try {
-       const { token } = await req.cookies; // Assuming you're using cookie-parser middleware
+   try {   
+       console.log(req.cokkie);
+       const { token } = req.cookies; // Assuming you're using cookie-parser middleware
 
        console.log(token);
 
@@ -34,7 +35,7 @@ const isLoogedIn = async (req, res, next) => {
        next();
    } catch (error) {
       console.log(error);
-       return next(new AppError("Not logged in", 401));
+       return next(new AppError(error, 401));
    }
 };
 

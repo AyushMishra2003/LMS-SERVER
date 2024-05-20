@@ -7,13 +7,11 @@ import nodemailer from 'nodemailer'
 import cloudinary from 'cloudinary'
 import crypto from 'crypto'
 import fs from 'fs/promises'
-const cokkieOption={
+const cokkieOption={ 
+    secure:process.env.NODE_ENV==='production'?true:false,
     maxAge:7*24*60*60*1000,
     httpOnly:true,
-    secure:false,
-    sameSite: 'none',
 }
-
 
 
 const register=async(req,res,next)=>{
@@ -105,17 +103,22 @@ const login=async(req,res,next)=>{
     return next(new AppError('Email or Password not matched',400))
    }
    const token=await user.generateJWTToken()
+  
+   console.log(res.cokkie);
+
 
    console.log(token);
 
    user.password=undefined
-//    res.cookie('token',token,cokkieOption)
-   res.cookie('token', token, {
-    httpOnly: true,
-    secure: false, // Set to true if using HTTPS
-    sameSite: 'none', // Change if needed based on your CORS configuration
-    maxAge: 7 * 24 * 60 * 60 * 1000, // Example for a 7-day expiry
-  });
+   res.cookie('token',token,cokkieOption)
+
+   console.log(res.cokkie);
+//    res.cookie('token', token, {
+//     httpOnly: true,
+//     secure: false, // Set to true if using HTTPS
+//     sameSite: 'none', // Change if needed based on your CORS configuration
+//     maxAge: 7 * 24 * 60 * 60 * 1000, // Example for a 7-day expiry
+//   });
 
 
    res.status(200).json({
