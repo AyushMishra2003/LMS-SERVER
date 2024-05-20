@@ -19,7 +19,7 @@ import jwt from 'jsonwebtoken'
 
 const isLoogedIn = async (req, res, next) => {
    try {   
-       console.log(req.cokkie);
+       console.log(req.cokkies);
        const { token } = req.cookies; // Assuming you're using cookie-parser middleware
 
        console.log(token);
