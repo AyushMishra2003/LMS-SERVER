@@ -6,7 +6,7 @@ import { authorizedRoles, isLoogedIn } from "../middlewares/auth.middleware.js";
 
 const stats=Router()
 
-stats.get("/", isLoogedIn,authorizedRoles('ADMIN'), userStat)
+stats.get("/",authorizedRoles('ADMIN'), userStat)
 
 
 

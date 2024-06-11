@@ -148,13 +148,13 @@ const logout=(req,res)=>{
 
 
 const getProfile=async(req,res,next)=>{
-
+try{
    console.log("profile-1"); 
-   const userId=req.user.id
-
-   console.log(req.user.id);
+   const { id } = req.query; // Assuming id is passed as a query parameter
+   console.log(id);
+//    console.log(req.user.id);
    console.log("profile-2");
-   const user=await User.findById(userId)
+   const user=await User.findById(id)
    if(!user){
       return next(new AppError("User not Found",400))
    }
@@ -165,6 +165,9 @@ const getProfile=async(req,res,next)=>{
     user
    })
    console.log("profile-4");
+}catch(error){
+    console.log(error);
+}
 }
 
 const  forgot_password = async (req, res, next) => {

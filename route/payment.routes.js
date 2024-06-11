@@ -7,7 +7,6 @@ const router=Router()
 router
     .route('/razorpay-key')
     .get(
-        isLoogedIn,
         getRazorPayApiKey
     )
 
@@ -16,7 +15,6 @@ router
 router
    .route('/subscribe')
    .post(
-      isLoogedIn, 
       buySubscription
     )
 
@@ -24,7 +22,6 @@ router
 router
   .route('/verify')
   .post(
-    isLoogedIn,
     verifySubscription
   )
   
