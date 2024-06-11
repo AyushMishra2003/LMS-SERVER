@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import userRoutes from './route/user.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import courseRouter from './route/course.routes.js';
-import cors from 'cors';
 import paymentRoutes from './route/payment.routes.js';
 import demoRoute from './route/demo.routes.js';
 import stats from './route/Stats.routes.js';
@@ -13,20 +12,24 @@ import stats from './route/Stats.routes.js';
 config();
 
 const app = express();
+
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-
-// Specify the front-end origin for CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL, // Allow the specific origin
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-  optionsSuccessStatus: 204 // Some legacy browsers (IE11, various SmartTVs) choke on 204
-}));
-
 app.use(morgan('dev'));
 
-// Route definitions
+// CORS configuration
+app.use((req, res, next) => {
+  // Allow any origin when credentials are not present
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials like cookies
+  next();
+});
+
+// Routes
 app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/courses', courseRouter);
 app.use('/api/v1/payments', paymentRoutes);
